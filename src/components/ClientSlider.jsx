@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { API_BASE_URL } from './config';
 
 const ClientSlider = () => {
     // Railway ka backend URL direct yahan use karein (Agar config file mein issue ho toh)
-    const API_BASE_URL = "https://rbmbackend-production.up.railway.app/";
+
 
     const [clients, setClients] = useState([]);
 
