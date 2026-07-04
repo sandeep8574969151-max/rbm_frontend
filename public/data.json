@@ -1,0 +1,91 @@
+{
+    "banners": [
+        {
+            "id": 1,
+            "imageUrl": "/banner1.jpg",
+            "title": "Welcome to RBM Chemical"
+        },
+        {
+            "id": 2,
+            "imageUrl": "/banner2.jpg",
+            "title": "High Quality Solutions"
+        },
+        {
+            "id": 3,
+            "imageUrl": "/banner3.jpg",
+            "title": "Best Industrial Chemicals"
+        },
+        {
+            "id": 4,
+            "imageUrl": "/banner4.jpg",
+            "title": "Trusted by Experts"
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Chemical Product 1",
+            "image": "/prod1.jpg",
+            "category": "Epoxy",
+            "sub_category": "Primer"
+        },
+        {
+            "id": 2,
+            "name": "Chemical Product 2",
+            "image": "/prod2.jpg",
+            "category": "Epoxy",
+            "sub_category": "Topcoat"
+        },
+        {
+            "id": 3,
+            "name": "Chemical Product 3",
+            "image": "/prod3.jpg",
+            "category": "Epoxy",
+            "sub_category": "Primer"
+        },
+        {
+            "id": 4,
+            "name": "Chemical Product 4",
+            "image": "/prod4.jpg",
+            "category": "Epoxy",
+            "sub_category": "Topcoat"
+        }
+    ],
+    "gallery": [
+        {
+            "id": 1,
+            "imageUrl": "/gallery1.jpg"
+        },
+        {
+            "id": 2,
+            "imageUrl": "/gallery2.jpg"
+        }
+    ],
+    "clients": [
+        {
+            "id": 1,
+            "name": "JBM Group",
+            "logoUrl": "/clients/jbm.png"
+        },
+        {
+            "id": 2,
+            "name": "Kubota",
+            "logoUrl": "/clients/kubota.png"
+        },
+        {
+            "id": 3,
+            "name": "P&G",
+            "logoUrl": "/clients/pg.png"
+        },
+        {
+            "id": 4,
+            "name": "Honda",
+            "logoUrl": "/clients/honda.png"
+        },
+        {
+            "id": 5,
+            "name": "Mahindra",
+            "logoUrl": "/clients/mahindra.png"
+        }
+    ]
+}
