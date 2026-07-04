@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://rbm-backend-1.onrender.com/";
+export const API_BASE_URL = "https://rbm-backend-1.onrender.com";
