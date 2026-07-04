@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from 'react';
 // Import path confirm kar lein ki aapke project structure ke hisaab se sahi hai
-import { API_BASE_URL } from '../config';
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
-        // Render Backend se data fetch karna
-        fetch(`${API_BASE_URL}/get_banners.php`)
-            .then(res => {
-                if (!res.ok) throw new Error("Network response was not ok");
-                return res.json();
-            })
-            .then(data => {
-                console.log("Banners data:", data);
-                setBanners(data);
-            })
+        fetch("https://rbm-backend-1.onrender.com/get_banners.php")
+            .then(res => res.json())
+            .then(data => setBanners(data))
             .catch(err => console.error("Error fetching banners:", err));
     }, []);
-
     // Auto-slide logic
     useEffect(() => {
         if (banners.length === 0) return;
