@@ -16,9 +16,6 @@ import Admin from './pages/Admin';
 import SubCategoryPage from './pages/SubCategoryPage';
 import CategoryPage from './pages/CategoryPage';
 
-
-
-
 function App() {
   return (
     <Router>
@@ -38,7 +35,6 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/products/:subCategory" element={<SubCategoryPage />} />
           <Route path="/category/:categoryName" element={<CategoryPage />} />
-          <Router basename="/"></Router>
         </Routes>
       </Layout>
     </Router>
