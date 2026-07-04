@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from './config';
+import { API_BASE_URL } from '../config'
 
 const Products = () => {
     // Railway ka correct API URL

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Import path confirm kar lein ki aapke project structure ke hisaab se sahi hai
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../config';
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);
