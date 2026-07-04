@@ -2,23 +2,22 @@ import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { API_BASE_URL } from '../config'; // Config se import karna better hai
 
 const ClientSlider = () => {
-    // Direct URL hardcode kar diya hai taaki import error na aaye
-    const baseUrl = "https://rbm-backend-1.onrender.com";
-
     const [clients, setClients] = useState([]);
 
     useEffect(() => {
-        // fetch mein slash '/' add karna zaroori hai
-        fetch(`${baseUrl}/get_clients.php`)
+        // API path: API_BASE_URL + / + get_clients.php
+        fetch(`${API_BASE_URL}/get_clients.php`)
             .then(res => {
                 if (!res.ok) throw new Error("Network response was not ok");
                 return res.json();
             })
             .then(data => {
                 console.log("Clients loaded:", data);
-                setClients(Array.isArray(data) ? data : (data.clients || []));
+                // Data ko validate karein
+                setClients(Array.isArray(data) ? data : []);
             })
             .catch(err => console.error("Error fetching clients:", err));
     }, []);
@@ -45,14 +44,15 @@ const ClientSlider = () => {
             {clients.length > 0 ? (
                 <Slider {...settings}>
                     {clients.map((client, index) => (
-                        <div key={index} className="px-2">
+                        <div key={client.id || index} className="px-2">
                             <div className="h-24 flex items-center justify-center border border-gray-200 p-2 bg-white hover:shadow-lg transition">
                                 <img
-                                    // Path mein slash ensure kiya hai
-                                    src={`${baseUrl}/uploads/${client.logoUrl}`}
+                                    // Sahi Path: API_BASE_URL/uploads/filename
+                                    // Database mein agar column 'logoUrl' hai toh wahi use karein
+                                    src={`${API_BASE_URL}/uploads/${client.logoUrl || client.image}`}
                                     alt={client.name || "Client Logo"}
                                     className="max-h-full max-w-full object-contain"
-                                    onError={(e) => { e.target.onerror = null; e.target.src = '/assets/placeholder-logo.png'; }}
+                                    onError={(e) => { e.target.src = '/assets/placeholder-logo.png'; }}
                                 />
                             </div>
                         </div>

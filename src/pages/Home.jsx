@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Components import
 import Hero from '../components/Hero';
-import Banner from '../components/Banner';
 import About from '../components/About';
 import Products from '../components/Products';
 import WhyChooseUs from '../components/WhyChooseUs';
@@ -38,7 +37,6 @@ const Home = () => {
     return (
         <>
             <Hero />
-            <Banner />
             <About />
             <Products />
             <WhyChooseUs />

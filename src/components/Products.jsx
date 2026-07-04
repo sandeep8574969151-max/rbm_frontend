@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from '../config'
+import { API_BASE_URL } from '../config'; // Ensure path is correct
 
 const Products = () => {
-    // Railway ka correct API URL
-
-
     const [products, setProducts] = useState([]);
     const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
-        // Sirf ek baar sahi URL se fetch karein
-        fetch(`${API_BASE_URL}get_products.php`)
+        // Correct path: API_BASE_URL + / + get_products.php
+        fetch(`${API_BASE_URL}/get_products.php`)
             .then((res) => {
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                if (!res.ok) throw new Error('Network response was not ok');
                 return res.json();
             })
             .then((data) => {
@@ -46,11 +41,12 @@ const Products = () => {
                             className="bg-white shadow-lg border p-4 rounded-lg overflow-hidden"
                         >
                             <img
-                                // Railway se image fetch karne ka sahi path
-                                src={`${API_BASE_URL}uploads/${item.image}`}
+                                // Sahi Image Path: API_BASE_URL + /uploads/ + filename
+                                src={`${API_BASE_URL}/uploads/${item.image || item.imageUrl}`}
                                 alt={item.name}
                                 className="w-full h-64 object-cover rounded"
-                                onError={(e) => { e.target.onerror = null; e.target.src = '/assets/placeholder.jpg'; }}
+                                // Placeholder fix
+                                onError={(e) => { e.target.src = '/assets/placeholder.jpg'; }}
                             />
 
                             <h3 className="text-2xl font-semibold mt-4 text-gray-800">{item.name}</h3>

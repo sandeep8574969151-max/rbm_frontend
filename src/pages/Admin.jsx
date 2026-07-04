@@ -5,10 +5,11 @@ const Admin = () => {
     const [category, setCategory] = useState('');
     const [categories, setCategories] = useState([]);
 
-    // Fetch Categories for Dropdown
+    // Fetch Categories
     const fetchCategories = async () => {
         try {
-            const res = await fetch(`${API_BASE_URL}get_all_categories.php`);
+            // Sahi URL path (slash ke saath)
+            const res = await fetch(`${API_BASE_URL}/get_all_categories.php`);
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const data = await res.json();
             setCategories(data);
@@ -23,7 +24,8 @@ const Admin = () => {
     // Helper for API Calls
     const postData = async (endpoint, formData) => {
         try {
-            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            // URL fix: API_BASE_URL + / + endpoint
+            const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
                 method: 'POST',
                 body: formData,
             });
@@ -44,7 +46,9 @@ const Admin = () => {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     const res = await postData("add_category.php", new FormData(e.target));
-                    alert(res); e.target.reset(); fetchCategories();
+                    alert(res);
+                    e.target.reset();
+                    fetchCategories();
                 }} className="flex gap-4">
                     <input type="text" name="cat_name" placeholder="Category Name" className="border p-2 w-full rounded" required />
                     <button type="submit" className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">Add</button>
@@ -57,7 +61,8 @@ const Admin = () => {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     const res = await postData("upload_product.php", new FormData(e.target));
-                    alert(res); e.target.reset();
+                    alert(res);
+                    e.target.reset();
                 }} className="space-y-4">
                     <input type="hidden" name="product_type" value="general" />
                     <input type="text" name="name" placeholder="Product Name" className="border p-2 w-full rounded" required />
@@ -90,7 +95,7 @@ const Admin = () => {
                         ))}
                     </select>
 
-                    <input type="text" name="sub_category" placeholder="Sub-Category Name (Optional)" className="border p-2 w-full rounded" />
+                    <input type="text" name="sub_category" placeholder="Sub-Category Name" className="border p-2 w-full rounded" />
                     <input type="file" name="image" className="border p-2 w-full rounded" required />
                     <button type="submit" className="bg-green-600 text-white px-6 py-2 rounded w-full hover:bg-green-700">Upload Product</button>
                 </form>
