@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../config'; // Import hona zaroori hai
+import { API_BASE_URL } from '../config';
 
 const Gallery = () => {
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Ab BASE_URL ki jagah hum direct API_BASE_URL use karenge
     useEffect(() => {
-        fetch(`${API_BASE_URL}get_gallery.php`)
+        // API call
+        fetch(`${API_BASE_URL}/get_gallery.php`)
             .then((res) => res.json())
             .then((data) => {
-                setImages(data);
+                // Agar data array hai toh use karein, warna empty array
+                setImages(Array.isArray(data) ? data : []);
                 setLoading(false);
             })
             .catch((err) => {
@@ -45,17 +46,20 @@ const Gallery = () => {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {images.map((item, index) => {
+                            // Backend se milne wala path (e.g., "uploads/image.jpg")
                             const rawPath = item.imageUrl || "";
-                            // URL banane ke liye API_BASE_URL ka sahi istemal
+
+                            // Final Path Logic:
+                            // Agar full URL hai toh wahi, warna API_BASE_URL + rawPath
                             const imagePath = rawPath.startsWith('http')
                                 ? rawPath
-                                : (rawPath.startsWith('uploads/') ? `${API_BASE_URL}${rawPath}` : `${API_BASE_URL}uploads/${rawPath}`);
+                                : `${API_BASE_URL}/${rawPath}`;
 
                             return (
                                 <div key={index} className="rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-300">
                                     <img
                                         src={imagePath}
-                                        alt={`Gallery ${index}`}
+                                        alt={`Project ${index}`}
                                         className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
                                         onError={(e) => {
                                             e.target.src = 'https://via.placeholder.com/300?text=Image+Not+Found';

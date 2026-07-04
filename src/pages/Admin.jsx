@@ -5,14 +5,12 @@ const Admin = () => {
     const [category, setCategory] = useState('');
     const [categories, setCategories] = useState([]);
 
-    // Fetch Categories
     const fetchCategories = async () => {
         try {
-            // Sahi URL path (slash ke saath)
             const res = await fetch(`${API_BASE_URL}/get_all_categories.php`);
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const data = await res.json();
-            setCategories(data);
+            setCategories(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error("Error fetching categories:", err);
             setCategories([]);
@@ -21,10 +19,8 @@ const Admin = () => {
 
     useEffect(() => { fetchCategories(); }, []);
 
-    // Helper for API Calls
     const postData = async (endpoint, formData) => {
         try {
-            // URL fix: API_BASE_URL + / + endpoint
             const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
                 method: 'POST',
                 body: formData,
@@ -40,35 +36,60 @@ const Admin = () => {
         <div className="p-10 max-w-5xl mx-auto space-y-12 bg-gray-50">
             <h1 className="text-3xl font-extrabold text-center text-gray-800">Admin Dashboard</h1>
 
-            {/* 1. Category Manager */}
+            {/* 1. Upload Banner */}
+            <div className="bg-white p-6 shadow-md rounded border-t-4 border-red-500">
+                <h2 className="text-2xl font-bold mb-5 text-red-700">Upload Banner</h2>
+                <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    const res = await postData("upload_banner.php", new FormData(e.target));
+                    alert(res); e.target.reset();
+                }} className="space-y-4">
+                    <input type="text" name="title" placeholder="Banner Title" className="border p-2 w-full rounded" required />
+                    <input type="file" name="image" className="border p-2 w-full rounded" required />
+                    <button type="submit" className="bg-red-600 text-white px-6 py-2 rounded w-full hover:bg-red-700">Upload Banner</button>
+                </form>
+            </div>
+
+            {/* 2. Upload Client Logo */}
+            <div className="bg-white p-6 shadow-md rounded border-t-4 border-yellow-500">
+                <h2 className="text-2xl font-bold mb-5 text-yellow-700">Upload Client Logo</h2>
+                <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    const res = await postData("upload_client.php", new FormData(e.target));
+                    alert(res); e.target.reset();
+                }} className="space-y-4">
+                    <input type="text" name="name" placeholder="Client Name" className="border p-2 w-full rounded" required />
+                    <input type="file" name="image" className="border p-2 w-full rounded" required />
+                    <button type="submit" className="bg-yellow-600 text-white px-6 py-2 rounded w-full hover:bg-yellow-700">Upload Client Logo</button>
+                </form>
+            </div>
+
+            {/* 3. Category Manager */}
             <div className="bg-white p-6 shadow-md rounded border">
                 <h2 className="text-2xl font-bold mb-5 text-gray-700">Add New Category</h2>
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     const res = await postData("add_category.php", new FormData(e.target));
-                    alert(res);
-                    e.target.reset();
-                    fetchCategories();
+                    alert(res); e.target.reset(); fetchCategories();
                 }} className="flex gap-4">
                     <input type="text" name="cat_name" placeholder="Category Name" className="border p-2 w-full rounded" required />
                     <button type="submit" className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">Add</button>
                 </form>
             </div>
 
-            {/* 2. Upload General Product */}
+            {/* 4. Upload General Product */}
             <div className="bg-white p-6 shadow-md rounded border-t-4 border-blue-500">
                 <h2 className="text-2xl font-bold mb-5 text-blue-700">Upload General Product</h2>
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     const res = await postData("upload_product.php", new FormData(e.target));
-                    alert(res);
-                    e.target.reset();
+                    alert(res); e.target.reset();
                 }} className="space-y-4">
                     <input type="hidden" name="product_type" value="general" />
                     <input type="text" name="name" placeholder="Product Name" className="border p-2 w-full rounded" required />
                     <textarea name="description" placeholder="Product Description" className="border p-2 w-full h-24 rounded" required />
                     <input type="file" name="image" className="border p-2 w-full rounded" required />
-                    <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded w-full hover:bg-blue-700">Upload General Product</button>
+                    <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded w-full hover:bg-blue-700">Upload Product</button>
                 </form>
             </div>
 
@@ -90,8 +111,10 @@ const Admin = () => {
 
                     <select name="category" className="border p-2 w-full rounded" required value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Select Category</option>
-                        {categories.map((cat, i) => (
-                            <option key={i} value={cat.category_name || cat}>{cat.category_name || cat}</option>
+                        {Array.isArray(categories) && categories.map((cat, i) => (
+                            <option key={i} value={cat.category_name || cat}>
+                                {cat.category_name || cat}
+                            </option>
                         ))}
                     </select>
 
