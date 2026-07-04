@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-// Import path confirm kar lein ki aapke project structure ke hisaab se sahi hai
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);
     const [index, setIndex] = useState(0);
 
+    // Backend Base URL
+    const baseUrl = "https://rbm-backend-1.onrender.com";
+
     useEffect(() => {
-        fetch("https://rbm-backend-1.onrender.com/get_banners.php")
+        fetch(`${baseUrl}/get_banners.php`)
             .then(res => res.json())
             .then(data => setBanners(data))
             .catch(err => console.error("Error fetching banners:", err));
     }, []);
+
     // Auto-slide logic
     useEffect(() => {
         if (banners.length === 0) return;
@@ -29,10 +32,10 @@ const Banner = () => {
                         className={`absolute w-full transition-opacity duration-1000 ${i === index ? 'opacity-100' : 'opacity-0'}`}
                     >
                         <img
-                            src={`${API_BASE_URL}/${item.imageUrl}`}
+                            // Yahan variable ka naam 'baseUrl' rakha hai
+                            src={`${baseUrl}/${item.imageUrl}`}
                             alt={item.title}
                             className="w-full h-[400px] object-cover"
-                            // Public folder mein default image rakhein ya path sahi karein
                             onError={(e) => { e.target.src = '/placeholder.jpg'; }}
                         />
                         <h2 className="absolute top-10 left-10 text-white text-4xl font-bold">{item.title}</h2>

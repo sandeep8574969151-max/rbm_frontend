@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { API_BASE_URL } from '../config'
 
 const ClientSlider = () => {
-    // Railway ka backend URL direct yahan use karein (Agar config file mein issue ho toh)
-
+    // Direct URL hardcode kar diya hai taaki import error na aaye
+    const baseUrl = "https://rbm-backend-1.onrender.com";
 
     const [clients, setClients] = useState([]);
 
     useEffect(() => {
-        // Backend se client data fetch karein
-        fetch(`${API_BASE_URL}get_clients.php`)
+        // fetch mein slash '/' add karna zaroori hai
+        fetch(`${baseUrl}/get_clients.php`)
             .then(res => {
                 if (!res.ok) throw new Error("Network response was not ok");
                 return res.json();
@@ -49,8 +48,8 @@ const ClientSlider = () => {
                         <div key={index} className="px-2">
                             <div className="h-24 flex items-center justify-center border border-gray-200 p-2 bg-white hover:shadow-lg transition">
                                 <img
-                                    // Yahan path check karein: database mein column ka naam 'logoUrl' hai ya 'logo'?
-                                    src={`${API_BASE_URL}uploads/${client.logoUrl}`}
+                                    // Path mein slash ensure kiya hai
+                                    src={`${baseUrl}/uploads/${client.logoUrl}`}
                                     alt={client.name || "Client Logo"}
                                     className="max-h-full max-w-full object-contain"
                                     onError={(e) => { e.target.onerror = null; e.target.src = '/assets/placeholder-logo.png'; }}
