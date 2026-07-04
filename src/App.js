@@ -38,6 +38,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/products/:subCategory" element={<SubCategoryPage />} />
           <Route path="/category/:categoryName" element={<CategoryPage />} />
+          <Router basename="/"></Router>
         </Routes>
       </Layout>
     </Router>
