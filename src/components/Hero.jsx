@@ -4,16 +4,17 @@ import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
-import { API_BASE_URL } from '../config';
 
+// Config file se import
+import { API_BASE_URL } from '../config';
 
 const Hero = () => {
     const [banners, setBanners] = useState([]);
     const [debug, setDebug] = useState("Loading...");
 
     useEffect(() => {
-        // String template literals (${}) ka use karein
-        fetch(`${API_BASE_URL}get_banners.php`)
+        // Sahi path: API_BASE_URL ke baad / lagayein
+        fetch(`${API_BASE_URL}/get_banners.php`)
             .then(res => res.json())
             .then(data => {
                 console.log("Full Data:", data);
@@ -28,7 +29,6 @@ const Hero = () => {
 
     return (
         <section className="relative w-full h-[70vh] bg-gray-200">
-            {/* DEBUGGER: Agar banner nahi dikhe toh ye text screen par dikhega */}
             {banners.length === 0 && (
                 <div className="absolute top-0 left-0 p-4 z-50 bg-red-500 text-white">
                     Debug: {debug}
@@ -47,7 +47,8 @@ const Hero = () => {
                         <SwiperSlide key={banner.id}>
                             <div className="w-full h-full relative">
                                 <img
-                                    src={`export const API_BASE_URL = "https://your-unique-render-url.onrender.com/";${banner.imageUrl}`}
+                                    // Sahi image path: API_BASE_URL + imageUrl
+                                    src={`${API_BASE_URL}/${banner.imageUrl}`}
                                     alt={banner.title}
                                     className="w-full h-full object-cover"
                                 />
