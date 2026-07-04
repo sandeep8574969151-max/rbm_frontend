@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 
-// Config file se import
+// Config file se API base URL import
 import { API_BASE_URL } from '../config';
 
 const Hero = () => {
@@ -13,7 +13,7 @@ const Hero = () => {
     const [debug, setDebug] = useState("Loading...");
 
     useEffect(() => {
-        // Sahi path: API_BASE_URL ke baad / lagayein
+        // API path mein / lagana zaroori hai
         fetch(`${API_BASE_URL}/get_banners.php`)
             .then(res => res.json())
             .then(data => {
@@ -29,6 +29,7 @@ const Hero = () => {
 
     return (
         <section className="relative w-full h-[70vh] bg-gray-200">
+            {/* Debugger: Sirf development ke waqt dikhega */}
             {banners.length === 0 && (
                 <div className="absolute top-0 left-0 p-4 z-50 bg-red-500 text-white">
                     Debug: {debug}
@@ -47,10 +48,12 @@ const Hero = () => {
                         <SwiperSlide key={banner.id}>
                             <div className="w-full h-full relative">
                                 <img
-                                    // Sahi image path: API_BASE_URL + imageUrl
-                                    src={`${API_BASE_URL}/${banner.imageUrl}`}
+                                    // Sahi Image Path Structure: API_BASE_URL/uploads/filename
+                                    src={`${API_BASE_URL}/uploads/${banner.imageUrl}`}
                                     alt={banner.title}
                                     className="w-full h-full object-cover"
+                                    // Agar image na mile toh placeholder load hoga
+                                    onError={(e) => { e.target.src = 'https://via.placeholder.com/1920x1080'; }}
                                 />
                                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                                     <h1 className="text-5xl font-bold text-white uppercase">{banner.title}</h1>
